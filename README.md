@@ -1,4 +1,4 @@
-# python-conda-minimal-cookiecutter-template
+# Python + Conda minimal project with GitHub Actions CI
 
 ## Requirements
 
