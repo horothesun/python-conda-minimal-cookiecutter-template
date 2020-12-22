@@ -1,0 +1,54 @@
+name: CI Linux
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+  workflow_dispatch: # enable manual execution
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash -l {0}
+
+    steps:
+    - name: Cancel previous runs
+      uses: styfle/cancel-workflow-action@{{ cookiecutter.ci_cancel_workflow_action_version }}
+      with:
+        access_token: ${{ '{{' }} github.token {{ '}}' }}
+
+    - uses: actions/checkout@v{{ cookiecutter.ci_checkout_action_version }}
+
+    - name: Set up Python
+      uses: actions/setup-python@v{{ cookiecutter.ci_setup_python_action_version }}
+      with:
+        python-version: {{ cookiecutter.ci_setup_python_action_python_version }}
+
+    - name: Cache conda
+      uses: actions/cache@v{{ cookiecutter.ci_cache_action_version }}
+      env:
+        # increase this value to reset cache even if environment.yml has not changed
+        CACHE_NUMBER: 0
+      with:
+        path: ~/conda_pkgs_dir
+        key: ${{ '{{' }} runner.os {{ '}}' }}-conda-${{ '{{' }} env.CACHE_NUMBER {{ '}}' }}-${{ '{{' }} hashFiles('environment.yml') {{ '}}' }}
+
+    - uses: conda-incubator/setup-miniconda@v{{ cookiecutter.ci_setup_miniconda_action_version }}
+      with:
+        activate-environment: {{ cookiecutter.repo_name }}-env
+        channel-priority: strict
+        environment-file: environment.yml
+        use-only-tar-bz2: true # IMPORTANT: This needs to be set for caching to work properly!
+
+    - name: Conda info
+      run: |
+        conda info
+        conda env list
+        conda env export
+
+    - name: Test
+      run: |
+        pytest -v

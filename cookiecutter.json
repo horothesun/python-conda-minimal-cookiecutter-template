@@ -1,0 +1,12 @@
+{
+  "github_username": "horothesun",
+  "project_name": "Python Conda minimal project",
+  "repo_name": "{{ cookiecutter.project_name.lower().strip().replace(' ', '-').replace(':', '-').replace('_', '-').replace('!', '_') }}",
+  "environment_python_version": "3.7",
+  "ci_cancel_workflow_action_version": "0.6.0",
+  "ci_checkout_action_version": "2",
+  "ci_setup_python_action_version": "2",
+  "ci_setup_python_action_python_version": "3.9",
+  "ci_cache_action_version": "2",
+  "ci_setup_miniconda_action_version": "2"
+}

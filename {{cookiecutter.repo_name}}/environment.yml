@@ -1,0 +1,12 @@
+name: {{ cookiecutter.repo_name }}-env
+
+channels:
+# - bioconda
+- conda-forge
+- defaults
+
+dependencies:
+- python={{ cookiecutter.environment_python_version }}
+- pytest
+# - numpy
+# - pandas
