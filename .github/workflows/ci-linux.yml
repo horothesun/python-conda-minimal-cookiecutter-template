@@ -1,0 +1,31 @@
+name: CI Linux
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+  workflow_dispatch: # enable manual execution
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Cancel previous runs
+      uses: styfle/cancel-workflow-action@0.6.0
+      with:
+        access_token: ${{ github.token }}
+
+    - uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.9
+
+    - name: Install Cookiecutter
+      run: pip install cookiecutter
+
+    - name: Generate project
+      run: cookiecutter . --no-input --verbose project_name="Generated Project"
