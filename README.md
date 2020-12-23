@@ -1,5 +1,7 @@
 # Python + Conda minimal project with GitHub Actions CI
 
+[![CI Linux](https://github.com/horothesun/python-conda-minimal-cookiecutter-template/workflows/CI%20Linux/badge.svg)](https://github.com/horothesun/python-conda-minimal-cookiecutter-template/blob/master/.github/workflows/ci-linux.yml)
+
 ## Example
 
 [horothesun/python-sample](https://github.com/horothesun/python-sample)
