@@ -29,3 +29,10 @@ jobs:
 
     - name: Generate project
       run: cookiecutter . --no-input --verbose project_name="Generated Project"
+
+    - name: Upload generated project
+      uses: actions/upload-artifact@v2
+      with:
+        name: python-conda-minimal-project
+        path: python-conda-minimal-project/
+        if-no-files-found: error
